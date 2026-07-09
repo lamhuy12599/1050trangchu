@@ -8,139 +8,172 @@
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/4/40/7-eleven_logo.svg" type="image/svg+xml">
     
     <style>
-        /* CSS Reset & Font */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+        /* --- iOS SF Pro Font & Base Reset --- */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-font-smoothing: antialiased;
+        }
         
+        /* --- 7-Eleven & iOS Liquid Glass Theme Tokens --- */
         :root {
             --7e-green: #008062;
             --7e-orange: #F37021;
             --7e-red: #E2231A;
-            --bg-main: #F4F5F7;
-            --bg-card: #ffffff;
-            --text-main: #333;
-            --border-color: #e0e0e0;
+            
+            /* Nền Gradient chuyển màu Xanh lá - Vàng nhẹ nhàng, dịu mắt */
+            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #fefce8 50%, #f6fcd5 100%);
+            
+            /* Hiệu ứng kính lỏng Glassmorphism iOS */
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: rgba(0, 128, 98, 0.06);
+            --btn-glass-bg: rgba(255, 255, 255, 0.5);
+            --btn-glass-hover: rgba(255, 255, 255, 0.75);
+            
+            --text-main: #1d1d1f; /* Màu chữ chuẩn cấu trúc Apple */
+            --text-muted: #6e6e73;
         }
 
-        /* Nền của trang chủ */
         body { 
-            background-color: var(--bg-main); 
+            background: var(--bg-gradient); 
+            background-attachment: fixed;
+            color: var(--text-main); 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
-            padding: 20px; 
+            padding: 30px 14px; 
         }
         
-        /* Khung Menu */
+        /* --- Khung Menu Kính lỏng siêu mịn --- */
         .menu-container { 
             width: 100%; 
-            max-width: 420px; 
-            background: var(--bg-card); 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-            padding: 40px 25px; 
+            max-width: 430px; 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(25px) saturate(190%);
+            -webkit-backdrop-filter: blur(25px) saturate(190%);
+            border-radius: 32px; /* Góc bo tròn mềm công thái học iOS */
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 16px 40px var(--glass-shadow); 
+            padding: 40px 22px 30px 22px; 
             text-align: center; 
             position: relative; 
             overflow: hidden; 
         }
         
-        /* Dải màu đặc trưng */
+        /* Dải màu sọc 3 màu huyền thoại đặc trưng của 7-Eleven */
         .menu-container::before { 
             content: ''; 
             position: absolute; 
             top: 0; left: 0; 
-            width: 100%; height: 8px; 
-            background: linear-gradient(to right, var(--7e-green) 33%, var(--7e-red) 33%, var(--7e-red) 66%, var(--7e-orange) 66%); 
+            width: 100%; height: 6px; 
+            background: linear-gradient(to right, var(--7e-green) 35%, var(--7e-red) 35%, var(--7e-red) 65%, var(--7e-orange) 65%); 
         }
 
-        .logo { height: 55px; margin-bottom: 15px; }
+        .logo { 
+            height: 55px; 
+            margin-bottom: 18px; 
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.06));
+        }
         
         h1 { 
-            color: var(--7e-green); 
-            font-size: 22px; 
-            font-weight: 800; 
-            margin-bottom: 8px; 
-            letter-spacing: 0.5px;
+            color: var(--text-main); 
+            font-size: 21px; 
+            font-weight: 700; 
+            margin-bottom: 6px; 
+            letter-spacing: -0.5px;
         }
         
         p.subtitle {
-            color: #666;
+            color: var(--text-muted);
             font-size: 14px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
+            font-weight: 500;
         }
 
-        /* Nút bấm */
+        /* --- Hệ thống nút ứng dụng phong cách Thẻ Kính mờ (iOS App Cells) --- */
         .app-btn { 
             display: flex; 
             align-items: center; 
             justify-content: flex-start;
             width: 100%; 
-            padding: 18px 20px; 
-            margin-bottom: 16px; 
-            background: #fff; 
-            border: 2px solid var(--border-color); 
-            border-radius: 14px; 
+            padding: 14px 16px; 
+            margin-bottom: 14px; 
+            background: var(--btn-glass-bg); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 18px; 
             text-decoration: none; 
             color: var(--text-main); 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .app-btn:hover { 
+            background: var(--btn-glass-hover);
             border-color: var(--7e-green); 
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 15px rgba(0, 128, 98, 0.1); 
+            transform: translateY(-2px) scale(1.01); 
+            box-shadow: 0 8px 20px rgba(0, 128, 98, 0.08); 
         }
 
+        /* Hiệu ứng đàn hồi nén nút khi bấm trên màn hình cảm ứng iOS */
         .app-btn:active {
-            transform: translateY(0);
+            transform: translateY(0) scale(0.98);
+            background: rgba(255, 255, 255, 0.9);
         }
 
-        /* Icon bên trong nút */
+        /* --- Khối Icon dạng hộp tròn bo góc vuông mịn (Squircle) --- */
         .btn-icon {
-            font-size: 26px;
-            margin-right: 15px;
-            background: #f8f9fa;
-            width: 50px;
-            height: 50px;
+            font-size: 24px;
+            margin-right: 14px;
+            width: 46px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
+            border-radius: 14px;
             flex-shrink: 0;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.6), 0 2px 6px rgba(0,0,0,0.03);
         }
 
-        /* Chữ bên trong nút */
+        /* Chữ định dạng bên trong nút */
         .btn-text {
             text-align: left;
+            overflow: hidden;
         }
         .btn-title {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 15.5px;
+            font-weight: 600;
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
+            letter-spacing: -0.2px;
         }
         .btn-desc {
             font-size: 12px;
-            color: #888;
+            color: var(--text-muted);
             font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Màu nhấn cho từng nút */
-        .btn-1 .btn-icon { background: #fff0e6; } /* Cam nhạt */
-        .btn-2 .btn-icon { background: #e6f2ef; } /* Xanh lá nhạt */
-        .btn-3 .btn-icon { background: #e6f0fa; } /* Xanh dương nhạt */
-        .btn-4 .btn-icon { background: #f5f0f5; } /* Tím/Hồng nhạt cho Tag in */
-        .btn-5 .btn-icon { background: #ffe6e6; } /* Đỏ nhạt cho Camera Timestamp */
-        .btn-6 .btn-icon { background: #e6f7ff; } /* MỚI: Xanh Da Trời Nhạt cho Kiểm Đếm */
+        /* --- Đổ màu đổ bóng nhẹ riêng biệt cho từng loại Icon Tool --- */
+        .btn-6 .btn-icon { background: linear-gradient(135deg, #e0f2fe, #bae6fd); color: #0284c7; } /* Kiểm đếm */
+        .btn-1 .btn-icon { background: linear-gradient(135deg, #fff7ed, #ffedd5); color: var(--7e-orange); } /* Tra cứu sản phẩm */
+        .btn-2 .btn-icon { background: linear-gradient(135deg, #f0fdf4, #dcfce7); color: var(--7e-green); } /* Kiểm date */
+        .btn-3 .btn-icon { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #2563eb; } /* Công thức */
+        .btn-4 .btn-icon { background: linear-gradient(135deg, #faf5ff, #f3e8ff); color: #9333ea; } /* Tag in */
+        .btn-5 .btn-icon { background: linear-gradient(135deg, #fef2f2, #fee2e2); color: var(--7e-red); } /* Timestamp */
 
-        /* Footer nhỏ */
+        /* Footer nhỏ gọn tối giản */
         .footer {
             margin-top: 25px;
             font-size: 12px;
-            color: #aaa;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -149,8 +182,8 @@
     <div class="menu-container">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/7-eleven_logo.svg" alt="Logo" class="logo">
         
-        <h1>HỆ THỐNG NỘI BỘ - 1050 Millenium Quận 4</h1>
-        <p class="subtitle">Vui lòng chọn công cụ làm việc</p>
+        <h1>HỆ THỐNG NỘI BỘ</h1>
+        <p class="subtitle">1050 Millenium Quận 4</p>
         
         <a href="https://lamhuy12599.github.io/1167counting/" class="app-btn btn-6">
             <div class="btn-icon">📊</div>
